@@ -1,7 +1,3 @@
-window.onload = function onload() { 
-  fetchMLB('computador')
-};
-
 // vai entrar o link de uma imagem
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -32,36 +28,41 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 // retorna o item pelo id passado pelo elemento span.item__sku
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
-//aqui é onde o filho chora e a mãe não ver! :)
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+// aqui é onde o filho chora e a mãe não ver! :)
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
   
-}
+// }
 
 const fetchMLB = (shopping) => {
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${shopping}`)
-    .then(response => response.json())
-    .then(products => {
+    .then((response) => response.json())
+    .then((products) => {
       products.results.forEach((product) => {
-        const allProducts = {};
-        allProducts.sku = product.id
-        allProducts.name = product.title;
-        allProducts.image = product.thumbnail;
+        const allProducts = {
+          sku: products.id,
+          name: product.title,
+          image: product.thumbnail,
+        };
         document.querySelector('.items')
           .appendChild(createProductItemElement(allProducts));
       });
     });
-}      
+};
 
 // vai receber um objeto com sku, name e saleprice e faz a destrutucring para retornar um texto com id, name...
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+// function createCartItemElement({ sku, name, salePrice }) {
+//   const li = document.createElement('li');
+//   li.className = 'cart__item';
+//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+//   li.addEventListener('click', cartItemClickListener);
+//   return li;
+// }
+
+window.onload = function onload() { 
+  fetchMLB('computador');
+};
