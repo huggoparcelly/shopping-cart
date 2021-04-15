@@ -50,8 +50,9 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText; // retorna o text que tem dentro da class item__sku que é filho de Item
 }
 
-function cartItemClickListener(_event) {
+function cartItemClickListener(event) {
   // coloque seu código aqui
+  event.target.remove();
 }
 
 // vai receber um objeto com sku, name e saleprice e faz a destrutucring para retornar um texto com id, name...
