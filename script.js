@@ -49,6 +49,27 @@ function renderProducts(products) {
 
 const cartItems = '.cart__items';
 
+// soma dos valores do cart item (async/await)
+function sumCart() {
+  const getCartList = document.querySelectorAll('.cart__item'); 
+  const listPrice = [];
+  getCartList.forEach((item) => {
+    const price = Number(item.innerText.split('$')[1]);
+    listPrice.push(price);
+  });
+  const sum = listPrice.reduce((a, b) => a + b, 0);
+  return sum;
+}
+
+// cria o elemento total
+function createTitlePrice() {
+  const elementProducts = document.querySelector('.cart');
+  const createSection = elementProducts
+    .appendChild(createCustomElement('section', 'total-price', ''));
+  createSection.appendChild(createCustomElement('span', 'price', sumCart()));
+  return createSection;
+}
+
 // resolução do requisito 4 feito com ajuda do Dennis
 function saveLocalStorage() {
   const getCartList = document.querySelector(cartItems).innerHTML;
@@ -61,8 +82,10 @@ function cartItemClickListener(event) {
   const getItem = event.target;
   getItem.remove();
   saveLocalStorage();
+  document.querySelector('.price').innerText = sumCart();
 }
 
+// carrega o que tem no local storage para o cart
 function loadLocalStorage() {
   const getCartList = document.querySelector(cartItems);
   getCartList.innerHTML = localStorage.getItem('card');
@@ -97,6 +120,7 @@ async function addItemCard(event) {
   const getCartItems = document.querySelector(cartItems);
   getCartItems.appendChild(createCart);
   saveLocalStorage();
+  document.querySelector('.price').innerText = sumCart();
 }
 
 function getBtn() {
@@ -111,4 +135,5 @@ window.onload = async function onload() {
   const products = await fetchMLB('computador');
   renderProducts(products);
   getBtn();
+  createTitlePrice();
 };
