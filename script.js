@@ -64,6 +64,7 @@ function sumCart() {
 // cria o elemento total
 function createTitlePrice() {
   const elementProducts = document.querySelector('.cart');
+  elementProducts.appendChild(createCustomElement('span', '', 'Total: $'));
   const createSection = elementProducts
     .appendChild(createCustomElement('section', 'total-price', ''));
   createSection.appendChild(createCustomElement('span', 'price', sumCart()));
@@ -74,6 +75,18 @@ function createTitlePrice() {
 function saveLocalStorage() {
   const getCartList = document.querySelector(cartItems).innerHTML;
   localStorage.setItem('card', getCartList);
+}
+
+function clearItemClickListener() {
+  localStorage.clear();
+  const getCartList = document.querySelector(cartItems);
+  getCartList.innerHTML = localStorage.getItem('card');
+  document.querySelector('.price').innerText = sumCart();
+}
+
+function clearCart() {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', clearItemClickListener);
 }
 
 // remove os items clicando neles no carrinho de compras e no local storage
@@ -136,4 +149,5 @@ window.onload = async function onload() {
   renderProducts(products);
   getBtn();
   createTitlePrice();
+  clearCart();
 };
