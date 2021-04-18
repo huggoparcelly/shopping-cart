@@ -47,6 +47,17 @@ function renderProducts(products) {
   });
 }
 
+function loading() {
+  const getContainer = document.querySelector('.container');
+  getContainer.appendChild(createCustomElement('section', 'loading', 'loading...'));
+  const now = new Date().getTime();
+  const apiLoadTime = now - performance.timing.fetchStart;
+  const time = apiLoadTime;
+  setTimeout(async () => {
+    document.querySelector('.loading').remove();
+  }, time);
+}
+
 const cartItems = '.cart__items';
 
 // soma dos valores do cart item (async/await)
@@ -145,6 +156,7 @@ function getBtn() {
 
 window.onload = async function onload() { 
   loadLocalStorage();
+  await loading();
   const products = await fetchMLB('computador');
   renderProducts(products);
   getBtn();
