@@ -69,7 +69,7 @@ function sumCart() {
     listPrice.push(price);
   });
   const sum = listPrice.reduce((a, b) => a + b, 0);
-  return sum;
+  return parseFloat(sum).toFixed(2);
 }
 
 // cria o elemento total
